@@ -2,21 +2,6 @@ package org.archiveit.jsonmodel;
 
 import java.sql.Timestamp;
 import java.util.Date;
-import java.util.List;
-
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import org.archiveit.model.Application;
-import org.archiveit.model.TestResult;
 
 public class TestResultJson {
 	private String id;
