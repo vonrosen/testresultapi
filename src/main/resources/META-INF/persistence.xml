@@ -6,7 +6,7 @@
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<properties>
 
-			<property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/archiveit3"></property>
+			<property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/testresults"></property>
 			<property name="hibernate.connection.username" value="root"></property>
 			<property name="hibernate.connection.password" value="root"></property>
 			<property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"></property>

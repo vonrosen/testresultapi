@@ -1,11 +1,9 @@
-package org.archiveit.model;
+package org.archiveit.jsonmodel;
 
-import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,23 +11,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.archiveit.model.Application;
+import org.archiveit.model.TestResult;
 
-/**
- * The persistent class for the TestResult database table.
- * 
- */
-@Entity
-@NamedQuery(name="TestResult.findAll", query="SELECT t FROM TestResult t")
-public class TestResult implements Serializable {
-	private static final long serialVersionUID = 1L;
-
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+public class TestResultJson {
 	private String id;
 
 	private String buildTested;
@@ -42,17 +31,14 @@ public class TestResult implements Serializable {
 
 	private Timestamp created;
 
-	@Lob
 	private byte[] detailMessage;
 
-	@Temporal(TemporalType.TIMESTAMP)
 	private Date endTime;
 
 	private Timestamp lastUpdated;
 
 	private String name;
 
-	@Temporal(TemporalType.TIMESTAMP)
 	private Date startTime;
 
 	private String testFiles;
@@ -63,13 +49,7 @@ public class TestResult implements Serializable {
 
 	private String testResults;
 
-	//bi-directional many-to-one association to Application
-	@ManyToOne
-	@JoinColumn(name="applicationId")
-	private Application application;
-
-	public TestResult() {
-	}
+	private String applicationName;
 
 	public String getId() {
 		return this.id;
@@ -191,50 +171,11 @@ public class TestResult implements Serializable {
 		this.testResults = testResults;
 	}
 
-	public Application getApplication() {
-		return this.application;
+	public String getApplicationName() {
+		return this.applicationName;
 	}
 
-	public void setApplication(Application application) {
-		this.application = application;
+	public void setApplicationName(String applicationName) {
+		this.applicationName = applicationName;
 	}
-
-    //bi-directional many-to-one association to TestResult
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="parentId")
-    private TestResult testResult;	
-
-    //bi-directional many-to-one association to TestResult
-    @OneToMany(mappedBy="testResult", fetch = FetchType.EAGER)
-    private List<TestResult> testRerunResults;
-	
-    public List<TestResult> getTestRerunResults() {
-        return this.testRerunResults;
-    }
-
-    public void setTestRerunResults(List<TestResult> testRerunResults) {
-        this.testRerunResults = testRerunResults;
-    }
-    
-    public TestResult getTestResult() {
-        return this.testResult;
-    }
-
-    public void setTestResult(TestResult testResult) {
-        this.testResult = testResult;
-    }
-
-    public TestResult addTestRerunResult(TestResult testResult) {
-        getTestRerunResults().add(testResult);
-        testResult.setTestResult(this);
-
-        return testResult;
-    }
-
-    public TestResult removeTestRerunResult(TestResult testResult) {
-        getTestRerunResults().remove(testResult);
-        testResult.setTestResult(null);
-
-        return testResult;
-    }	
 }

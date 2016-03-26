@@ -54,12 +54,15 @@
 	<bean id="testResultsResource"
 	    class="org.archiveit.resource.TestResultResource"
 	    scope="prototype">
+	    <property name="entityManager" ref="entityManager"/>
 	</bean>
 
 	<bean id="applicationsResource"
 	    class="org.archiveit.resource.ApplicationResource"
 	    scope="prototype">
 	</bean>
+	
+	
 
 	<bean id="entityManagerFactory" name="entityManagerFactory"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">

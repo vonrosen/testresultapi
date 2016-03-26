@@ -1,6 +1,9 @@
 package org.archiveit.resource;
 
+import javax.persistence.EntityManager;
+
 import org.archiveit.model.TestResult;
+import org.archiveit.util.Util;
 import org.json.JSONObject;
 import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.resource.Get;
@@ -9,13 +12,25 @@ import org.restlet.resource.ServerResource;
 
 public class TestResultResource extends ServerResource {
 
-    @Get("json")
+	public EntityManager getEntityManager() {
+		return entityManager;
+	}
+
+	public void setEntityManager(EntityManager entityManager) {
+		this.entityManager = entityManager;
+	}
+
+	private EntityManager entityManager = null;
+
+	@Get("json")
     public String getTestResults() {
     	if (getRequest().getAttributes().get("id") != null) {
     		String id = getRequest().getAttributes().get("id").toString();
     		
     		try {
-    			return new JsonRepresentation(new JSONObject("{id: " + id + " }")).getText();
+    			TestResult testResult = entityManager.find(TestResult.class, id);
+    			
+    			return new JsonRepresentation(new JSONObject(Util.createFlattened(testResult))).getText();
     		}
     		catch (Exception exc) {
     			exc.printStackTrace();
